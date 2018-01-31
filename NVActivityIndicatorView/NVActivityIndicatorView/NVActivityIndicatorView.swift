@@ -480,6 +480,21 @@ public final class NVActivityIndicatorView: UIView {
         isAnimating = false
         layer.sublayers?.removeAll()
     }
+    
+    public func pauseAnimation(){
+        let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
+        layer.speed = 0.0
+        layer.timeOffset = pausedTime
+    }
+    
+    public func resumeAnimation(){
+        let pausedTime = layer.timeOffset
+        layer.speed = 1.0
+        layer.timeOffset = 0.0
+        layer.beginTime = 0.0
+        let timeSincePause = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        layer.beginTime = timeSincePause
+    }
 
     // MARK: Internal
 
